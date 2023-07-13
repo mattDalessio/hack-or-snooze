@@ -1,7 +1,7 @@
 "use strict";
 
 const BASE_URL = "https://hack-or-snooze-v3.herokuapp.com";
-
+// const STORIES_URL = "/stories";
 /******************************************************************************
  * Story: a single story in the system
  */
@@ -73,17 +73,38 @@ class StoryList {
    * Returns the new Story instance
    */
 
-  async addStory( /* user, newStory */) {
+  async addStory(user, newStory) {
     // TODO: complete this function!
-
+    //console.log('user:', user, "newStory", newStory);
     //method that adds a new story by sending the right data to our API
     // use comment string for this template
     // test ==> let newStory = await storyList.addStory(currentUser, {title: "Test",
     //author: "Me", url: "http://meow.com"});
     // test if we're returning instance of Story class ==> newStory instanceof Story;
-
+    //user is the user object (current user)
+    //story object?
+    const {author, title, url} = newStory;
+    const response = await axios({
+      url: `${BASE_URL}/stories`,
+      method: "POST",
+      //newStory = title, author and url
+      data: { "token": user.loginToken, "story": newStory
+    },
+    });
+    //const newStory = new Story(response);
+    //console.log(newStory instanceof Story);
+   //console.log({response})
   }
 }
+
+
+
+
+// const response = await axios({
+//   url: `${BASE_URL}/signup`,
+//   method: "POST",
+//   data: { user: { username, password, name } },
+// });
 
 
 /******************************************************************************
@@ -97,13 +118,13 @@ class User {
    */
 
   constructor({
-                username,
-                name,
-                createdAt,
-                favorites = [],
-                ownStories = []
-              },
-              token) {
+    username,
+    name,
+    createdAt,
+    favorites = [],
+    ownStories = []
+  },
+    token) {
     this.username = username;
     this.name = name;
     this.createdAt = createdAt;
