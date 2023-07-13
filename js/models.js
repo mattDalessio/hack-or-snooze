@@ -74,7 +74,14 @@ class StoryList {
    */
 
   async addStory( /* user, newStory */) {
-    // UNIMPLEMENTED: complete this function!
+    // TODO: complete this function!
+
+    //method that adds a new story by sending the right data to our API
+    // use comment string for this template
+    // test ==> let newStory = await storyList.addStory(currentUser, {title: "Test",
+    //author: "Me", url: "http://meow.com"});
+    // test if we're returning instance of Story class ==> newStory instanceof Story;
+
   }
 }
 
