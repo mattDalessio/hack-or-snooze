@@ -206,15 +206,69 @@ class User {
       return null;
     }
   }
+
+  /** favoriteStory: Post request to add favorited story, updates user instance,
+   * calls UI add
+   * accepts story instance
+   */
+
+  async addFavorite(story){
+    // post request to API
+    // update user instance locally
+    // call add to favorite page UI
+    const response = await axios({
+      url: `${BASE_URL}/users/${this.username}/favorites/${story.storyId}`,
+      method: "POST",
+      data: { token: this.loginToken },
+    });
+    console.log("api request response=", response);
+    this.favorites = response.data.user.favorites.map(s => new Story(s));
+
+    //addFavoritedStoryToUi(user);
+  }
+
+  /** unFavoriteStory: Delete request to remmove story from favorites array,
+   * updates user instance, calls UI remove
+   * accepts story instance
+   */
+
+  async removeFavorite(story){
+    // delete request to API
+    // update user instance locally
+    // call remove from favorite page UI
+    const response = await axios({
+      url: `${BASE_URL}/users/${this.username}/favorites/${story.storyId}`,
+      method: "DELETE",
+      data: { token: this.loginToken },
+    });
+
+    this.favorites = response.data.user.favorites.map(s => new Story(s));
+
+    //removeFavoritedStoryFromUi(user);
+  }
+
+  /** checkFavoriteStatus: Checks current user's favorites list to see if clicked
+   * story is located there - calls unFavoriteStory if so, favoriteStory if not
+   * accepts story instance from click event
+   */
+
+  checkFavoriteStatus(story){
+    //check currentUser for info --> currentUser.favorites
+    const favoritesList = currentUser.favorites;
+    const storyId = story.id;
+    for(let item of favoritesList){
+      if(storyId === id){
+          this.unFavoriteStory(item);
+      }
+    }
+    this.favoriteStory(item);
+  }
+
+
+
+
 }
 
-
-// Two methods: favoriting and un-favoriting
-// both methods need to accept a story instance as parameter
-// both will send request to API to send notice about favorite/unfavorite
-// addFavorite(story) ==> favoriting
-// true/false, for each favorited item needs some kind of toggle to keep track of state
-// post request to add or subtract from the user.favorite array
 
 /* click event on the star
   => either send that to favoriting function or un-favoritng depending
