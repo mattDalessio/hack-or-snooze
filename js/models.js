@@ -23,9 +23,8 @@ class Story {
 
   /** Parses hostname out of URL and returns it. */
 
-  getHostName() {
-    // UNIMPLEMENTED: complete this function!
-    return "hostname.com";
+  getHostName(url) {
+    return this.url.split("/")[2];
   }
 }
 
@@ -74,29 +73,24 @@ class StoryList {
    */
 
   async addStory(user, newStory) {
-    //console.log('user:', user, "newStory", newStory);
-    //method that adds a new story by sending the right data to our API
-    // use comment string for this template
-    // test ==> let newStory = await storyList.addStory(currentUser, {title: "Test",
-    //author: "Me", url: "http://meow.com"});
-    // test if we're returning instance of Story class ==> newStory instanceof Story;
 
-    const {author, title, url} = newStory;
+    const { author, title, url } = newStory;
+
     const response = await axios({
       url: `${BASE_URL}/stories`,
       method: "POST",
       //newStory = title, author and url
-      data: {"token": user.loginToken, "story": newStory
-    },
+      data: {
+        "token": user.loginToken, "story": newStory
+      },
     });
 
     const submittedStory = new Story(response.data.story);
+
     this.stories.unshift(submittedStory);
     return submittedStory;
   }
 }
-
-//TODO: hostname!
 
 /******************************************************************************
  * User: a user in the system (only used to represent the current user)
