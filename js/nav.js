@@ -36,3 +36,15 @@ function updateNavOnLogin() {
   $navLogOut.show();
   $navUserProfile.text(`${currentUser.username}`).show();
 }
+
+/** When a user clicks on submit, new story form appears
+ *  Accepts evt
+ */
+
+function navSubmitClick (evt){
+  console.log("navSubmitClick runs", evt);
+  evt.preventDefault();
+  $submitStoryForm.show().append($allStoriesList);
+}
+
+$navSubmit.on("click", navSubmitClick);

@@ -74,38 +74,29 @@ class StoryList {
    */
 
   async addStory(user, newStory) {
-    // TODO: complete this function!
     //console.log('user:', user, "newStory", newStory);
     //method that adds a new story by sending the right data to our API
     // use comment string for this template
     // test ==> let newStory = await storyList.addStory(currentUser, {title: "Test",
     //author: "Me", url: "http://meow.com"});
     // test if we're returning instance of Story class ==> newStory instanceof Story;
-    //user is the user object (current user)
-    //story object?
+
     const {author, title, url} = newStory;
     const response = await axios({
       url: `${BASE_URL}/stories`,
       method: "POST",
       //newStory = title, author and url
-      data: { "token": user.loginToken, "story": newStory
+      data: {"token": user.loginToken, "story": newStory
     },
     });
-    //const newStory = new Story(response);
-    //console.log(newStory instanceof Story);
-   //console.log({response})
+
+    const submittedStory = new Story(response.data.story);
+    this.stories.unshift(submittedStory);
+    return submittedStory;
   }
 }
 
-
-
-
-// const response = await axios({
-//   url: `${BASE_URL}/signup`,
-//   method: "POST",
-//   data: { user: { username, password, name } },
-// });
-
+//TODO: hostname!
 
 /******************************************************************************
  * User: a user in the system (only used to represent the current user)

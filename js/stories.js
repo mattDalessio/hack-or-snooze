@@ -12,6 +12,35 @@ async function getAndShowStoriesOnStart() {
   putStoriesOnPage();
 }
 
+/** Gets data from submit story form, calls addStory, puts new story on DOM */
+
+async function getAndShowNewStory (){
+  //gets data from submit form
+  //call .addStory
+  //puts new story on DOM (in .stories-container)
+  //{title: "Test", author: "Me", url: "http://meow.com"}
+  console.log("getAndShowNewStory runs");
+
+  const storyAuthor = $("#submit-author").val();
+  const storyTitle = $("#submit-story-title").val();
+  const storyUrl = $("#submit-url").val();
+
+  const newStory = {title: storyTitle, author: storyAuthor, url: storyUrl};
+  console.log("newStory=", newStory);
+  const submittedStory = await storyList.addStory(currentUser, newStory);
+  console.log("submittedStory=", submittedStory);
+  putStoriesOnPage();
+
+}
+
+$submitStoryForm.on("submit", async function handleSubmitForm(evt){
+  evt.preventDefault();
+  await getAndShowNewStory();
+  console.log("submit ran");
+});
+
+
+
 /**
  * A render method to render HTML for an individual Story instance
  * - story: an instance of Story
