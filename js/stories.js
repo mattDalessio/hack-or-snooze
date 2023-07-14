@@ -21,6 +21,8 @@ async function getAndShowNewStory() {
   //{title: "Test", author: "Me", url: "http://meow.com"}
   //console.log("getAndShowNewStory runs");
 
+  //move evt.preventDefault here
+
   const storyAuthor = $("#submit-author").val();
   const storyTitle = $("#submit-story-title").val();
   const storyUrl = $("#submit-url").val();
@@ -31,10 +33,14 @@ async function getAndShowNewStory() {
   const submittedStory = await storyList.addStory(currentUser, newStory);
   //console.log("submittedStory=", submittedStory);
 
+  //make html for that story in particular and add to top of dom using markUp
+  //function and then just prepend to the list
+
   putStoriesOnPage();
 }
 
 $submitStoryForm.on("submit", async function handleSubmitForm(evt) {
+  //submit function getAndShowNewStory
   evt.preventDefault();
 
   await getAndShowNewStory();
