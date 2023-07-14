@@ -14,38 +14,31 @@ async function getAndShowStoriesOnStart() {
 
 /** Gets data from submit story form, calls addStory, calls putStoriesOnPage */
 
-async function getAndShowNewStory() {
+async function getAndShowNewStory(evt) {
   //gets data from submit form
   //call .addStory
   //puts new story on DOM (in .stories-container)
   //{title: "Test", author: "Me", url: "http://meow.com"}
-  //console.log("getAndShowNewStory runs");
 
-  //move evt.preventDefault here
+  evt.preventDefault();
 
   const storyAuthor = $("#submit-author").val();
   const storyTitle = $("#submit-story-title").val();
   const storyUrl = $("#submit-url").val();
 
   const newStory = { title: storyTitle, author: storyAuthor, url: storyUrl };
-  //console.log("newStory=", newStory);
-
-  const submittedStory = await storyList.addStory(currentUser, newStory);
-  //console.log("submittedStory=", submittedStory);
+   const storyInstance = await storyList.addStory(currentUser, newStory);
 
   //make html for that story in particular and add to top of dom using markUp
   //function and then just prepend to the list
-
-  putStoriesOnPage();
+//console.log({storyList});
+ const prepareSubmittedStory = await generateStoryMarkup(storyInstance);
+ //console.log({prepareSubmittedStory});
+ prepareSubmittedStory.prependTo($allStoriesList);
+ //putStoriesOnPage();
 }
 
-$submitStoryForm.on("submit", async function handleSubmitForm(evt) {
-  //submit function getAndShowNewStory
-  evt.preventDefault();
-
-  await getAndShowNewStory();
-  //console.log("submit ran");
-});
+$submitStoryForm.on("submit", getAndShowNewStory);
 
 
 
@@ -57,7 +50,7 @@ $submitStoryForm.on("submit", async function handleSubmitForm(evt) {
  */
 
 function generateStoryMarkup(story) {
-  // console.debug("generateStoryMarkup", story);
+  console.debug("generateStoryMarkup", story);
 
   const hostName = story.getHostName();
   return $(`

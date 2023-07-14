@@ -40,12 +40,10 @@ function updateNavOnLogin() {
 /** When a user clicks on submit, new story form appends to StoriesList
  *  Accepts evt
  */
-//refactor the append portion - find better way to do this.
-
 function navSubmitClick(evt) {
-  //console.log("navSubmitClick runs", evt); ==> add console.debug here
+  console.debug("navSubmitClick", evt);
   evt.preventDefault();
-  $submitStoryForm.show().append($allStoriesList);
+  $submitStoryForm.show().insertBefore($allStoriesList);
 }
 
 $navSubmit.on("click", navSubmitClick);

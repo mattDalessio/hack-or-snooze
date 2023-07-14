@@ -22,9 +22,10 @@ class Story {
   }
 
   /** Parses hostname out of URL and returns it. */
-//TODO: delete url parameter, URL class in Javascript (refactor using this)
-  getHostName(url) {
-    return this.url.split("/")[2];
+  getHostName() {
+    console.debug('this.getHostName');
+    const url = new URL(this.url);
+    return url.hostname;
   }
 }
 
@@ -71,10 +72,6 @@ class StoryList {
    *
    * Returns the new Story instance
    */
-// destructuring on 77 delete
-// newStory == could use the destructured material to make sure we're passing in what we want
-// don't have to worry about order of keys (no indexes)
-
   async addStory(user, newStory) {
 
     const { author, title, url } = newStory;
@@ -84,7 +81,7 @@ class StoryList {
       method: "POST",
       //newStory = title, author and url
       data: {
-        "token": user.loginToken, "story": newStory
+        "token": user.loginToken, "story": { author, title, url }
       },
     });
 
