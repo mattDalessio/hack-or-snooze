@@ -207,3 +207,21 @@ class User {
     }
   }
 }
+
+
+// Two methods: favoriting and un-favoriting
+// both methods need to accept a story instance as parameter
+// both will send request to API to send notice about favorite/unfavorite
+// addFavorite(story) ==> favoriting
+// true/false, for each favorited item needs some kind of toggle to keep track of state
+// post request to add or subtract from the user.favorite array
+
+/* click event on the star
+  => either send that to favoriting function or un-favoritng depending
+  on the status of the toggle ==> if post-id present in the favorites array of currUser
+  => if favoriting ==> send api post request to add that story instance to
+  the favorites array in currentUser
+  => if unfavoriting ==> send api delete request to remove that story from array
+
+  update the user instance on local memory so that the favorites array is accessible
+*/
