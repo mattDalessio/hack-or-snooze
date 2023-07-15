@@ -27,15 +27,15 @@ async function getAndShowNewStory(evt) {
   const storyUrl = $("#submit-url").val();
 
   const newStory = { title: storyTitle, author: storyAuthor, url: storyUrl };
-   const storyInstance = await storyList.addStory(currentUser, newStory);
+  const storyInstance = await storyList.addStory(currentUser, newStory);
 
   //make html for that story in particular and add to top of dom using markUp
   //function and then just prepend to the list
-//console.log({storyList});
- const prepareSubmittedStory = await generateStoryMarkup(storyInstance);
- //console.log({prepareSubmittedStory});
- prepareSubmittedStory.prependTo($allStoriesList);
- //putStoriesOnPage();
+  //console.log({storyList});
+  const prepareSubmittedStory = await generateStoryMarkup(storyInstance);
+  //console.log({prepareSubmittedStory});
+  prepareSubmittedStory.prependTo($allStoriesList);
+  //putStoriesOnPage();
 }
 
 $submitStoryForm.on("submit", getAndShowNewStory);
@@ -55,6 +55,9 @@ function generateStoryMarkup(story) {
   const hostName = story.getHostName();
   return $(`
       <li id="${story.storyId}">
+      <span>
+        <i class="Star bi bi-star"></i>
+      </span>
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -80,3 +83,22 @@ function putStoriesOnPage() {
 
   $allStoriesList.show();
 }
+
+
+$(".stories-container").on("click", ".Star", function (evt) {
+  if ($(evt.target).hasClass("bi bi-star")) {
+    $(evt.target).removeClass("bi bi-star");
+    $(evt.target).toggleClass("bi bi-star-fill");
+  } else {
+    $(evt.target).removeClass("bi bi-star-fill");
+    $(evt.target).toggleClass("bi bi-star");
+  }
+  const id = $(evt.target).closest("li").attr("id");
+
+  const matchedStory = storyList.stories.filter((obj) => obj.storyId === id);
+  //TODO:we we place this so we can access this function??
+  checkFavoriteStatus(matchedStory);
+});
+
+
+

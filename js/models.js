@@ -255,20 +255,16 @@ class User {
   checkFavoriteStatus(story){
     //check currentUser for info --> currentUser.favorites
     const favoritesList = currentUser.favorites;
-    const storyId = story.id;
+    const storyId = story.storyId;
     for(let item of favoritesList){
-      if(storyId === id){
+      if(storyId === favoritesList.storyId) {
+        console.log(item);
           this.unFavoriteStory(item);
       }
     }
     this.favoriteStory(item);
   }
-
-
-
-
 }
-
 
 /* click event on the star
   => either send that to favoriting function or un-favoritng depending
